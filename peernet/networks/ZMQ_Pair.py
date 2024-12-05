@@ -19,7 +19,7 @@ class ZMQ_Pair(BaseNetwork):
     address any other device).
     """
 
-    def __init__(self, device_name, start_port=5551, verbose=0, *args, **kwargs):
+    def __init__(self, device_name, start_port=5555, verbose=0, *args, **kwargs):
         """Constructor."""
         super().__init__(verbose=verbose, **kwargs)
 
@@ -41,7 +41,11 @@ class ZMQ_Pair(BaseNetwork):
             self.name = getpass.getuser()
         self.number = self.device_number[self.name]
 
-        self.ports = [[5551, 5552], [5553, 5554]]
+        self.ports = [
+            [start_port + i + j*self.NUM_DEVICES for i in range(self.NUM_DEVICES)]
+            for j in range(self.NUM_DEVICES)
+        ]
+        
         self.logger.debug(f"Using port dictionary: {self.ports}")
 
         # Create lists for the 2 * N sockets we need on this device.
