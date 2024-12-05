@@ -41,10 +41,7 @@ class ZMQ_Pair(BaseNetwork):
             self.name = getpass.getuser()
         self.number = self.device_number[self.name]
 
-        self.ports = [
-            [start_port + i for i in range(self.NUM_DEVICES)]
-            for j in range(self.NUM_DEVICES)
-        ]
+        self.ports = [[5551, 5552], [5553, 5554]]
         self.logger.debug(f"Using port dictionary: {self.ports}")
 
         # Create lists for the 2 * N sockets we need on this device.
